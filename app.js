@@ -67,9 +67,14 @@ client.on('message', msg => {
 
 client.on('message', msg => {
     if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
-        if (msg.content.toLowerCase() === 'hello there') {
-            msg.channel.send("`General Kenobi`");
+        if (msg.channel.id === "782410591927140362") {
+            // skips
+            } else {
+            if (msg.content.toLowerCase() === 'hello there') {
+                msg.channel.send("`General Kenobi`");
+            }
         }
+
         if (msg.content.toLowerCase() === 'where is your master?' || msg.content.toLowerCase() === "where is your master") {
             msg.channel.send("https://tenor.com/view/ahsoka-tano-thrawn-the-mandalorian-star-wars-rosario-dawson-gif-19351958");
             msg.reply("where is Grand Admiral Thrawn?");
