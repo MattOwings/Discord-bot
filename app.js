@@ -58,9 +58,31 @@ client.on('message', msg => {
     }
 })
 
+// ----------------------------------------------------------------------------------
 
+// Give Roles
+/* client.on('message', msg => {
+    if (msg.content.toLowerCase() === '$ml') {
+        const member = msg.mentions.members.first();
+        let testRole = msg.guild.roles.cache.find(role => role.id == "816059217688789032")
+        member.roles.add(testRole)
+    }
+}) */ // Not working 100% yet
 
-
+// Command to give other commands
+client.on('message', msg => {
+    if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
+        if (msg.channel.id === '581121014491250700') {
+            if (msg.content.toLowerCase() === '$commands') {
+                msg.channel.send("```Here's all the commands:\nCommand 1\n```")
+                msg.channel.send("`Command 2`")
+                msg.channel.send("`Command 3`")
+                msg.channel.send("`Command 4`")
+                // ... etc for when the give commands function works
+            }
+        }
+    }
+})
 
 // ----------------------------------------------------------------------------------
 // Various response commands for fun
@@ -114,15 +136,15 @@ client.on('message', msg => {
 
         // MARVEL
         
-        if (msg.content.toLowerCase() === "so you got detention") {
+        if (msg.content.toLowerCase().startsWith("so you got detention")) {
             msg.channel.send("https://tenor.com/view/captain-america-sit-down-patience-gif-14036497")
         }
-        if (msg.content.toLowerCase() === "huh") {
+        if (msg.content.toLowerCase().startsWith("huh")) {
             msg.channel.send("https://tenor.com/view/huh-rabbit-cute-gif-15676652")
         }
         
         
-        if (msg.content.toLowerCase().includes("wack")) {
+        if (msg.content.toLowerCase().startsWith("wack")) {
             msg.channel.send("https://tenor.com/view/captain-america-endgame-thanos-mcu-marvel-gif-14659947")
         }
 
@@ -130,22 +152,14 @@ client.on('message', msg => {
 
 
         // DC
-        if (msg.content.toLowerCase().includes("everyone")) {
-            msg.channel.send("https://tenor.com/view/batman-dc-bat-signal-batman-vs-superman-gif-5635050")
-        }
-        if (msg.content.toLowerCase().includes("we live in a society")) {
+        if (msg.content.toLowerCase().startsWith("we live in a society")) {
             msg.channel.send("https://tenor.com/view/joker-zack-snyders-justice-league-zsjl-gif-20378192")
         }
 
 
 
         // MISC
-        if (msg.content.toLowerCase() === "who asked?") {
-            msg.channel.send("https://tenor.com/view/me-looking-for-who-tf-asked-looking-around-kid-kazoo-kid-gif-17654948")
-            msg.reply("404 person not found")
-        }
-        
-        if (msg.content.toLowerCase() === "dancing kermit") {
+        if (msg.content.toLowerCase().startsWith("dancing kermit")) {
             msg.channel.send("https://media.discordapp.net/attachments/767244164312072195/827768640078086144/image0.gif")
         }
     }
