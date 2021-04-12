@@ -12,5 +12,4 @@ Future Plans:
 - More text commands
 
 NOTES:
-- I export a file called 'banned_words.js" that is not in this repository. The bot has a feature that can automatically delete messages, and if a random person posts a message the bot reads as 'vulgar' the message will be automatically deleted. banned_words.js is a collection of words that catch the filter and is not included due to it being a collection of such words. 
-- NPM "Package" and "Node_modules" files are git ignored. 
+- Some files are Git Ignored such as the NPM folders and files that contain sensitive data. For example, there is a 'password.js' file to login to the bot, but for obvious reasons is hidden so people cannot login to my bot.
