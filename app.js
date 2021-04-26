@@ -6,6 +6,7 @@ const password = require("./password.js")
 const memberCount = require('./member-count')
 
 const badWords = require('./banned_words')
+const checkMessage = require('./checkMessage')
 
 //console.log("Hello world");
 
@@ -21,30 +22,21 @@ client.on('ready', () => {
     client.channels.cache.get("786026453488894004").send("Eyeball Bot has been turned on!");
 });
 
-
-
-
-// Basic Moderation Commands
+// Automated Chat Moderation
 
 // Deleting Vulgar Chats
-
 client.on('message', msg => {
     if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
         if (msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
-            for (i=0; i<badWords.length; i++) {
-                if (msg.content.toLowerCase().includes(badWords[i])) {
-                    msg.delete();
-                    msg.reply("we do not use that word here! Code: " + [i])
-                }
-            }
+            checkMessage(msg);
         }
     }
 });
+// If the bot has the ability to delete messages, it will automatically delete messages that are vulgar or offensive in nature
+// There is a 'list' of words gitignored
 
 
-
-// Suggestion Command
-
+// Contact Moderators on my Personal Server
 client.on('message', msg => {
     if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
         if (msg.channel.id === "826966962403147808") {
@@ -57,6 +49,7 @@ client.on('message', msg => {
         }
     }
 })
+// This lets people open a help ticket with the Moderators of my server
 
 // ----------------------------------------------------------------------------------
 
@@ -83,10 +76,10 @@ client.on('message', msg => {
         }
     }
 })
+// Not done yet
 
 // ----------------------------------------------------------------------------------
-// Various response commands for fun
-
+// Random Fun Commands
 client.on('message', msg => {
     if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
         if (msg.channel.id === "782410591927140362") {
@@ -132,10 +125,7 @@ client.on('message', msg => {
             msg.channel.send("https://tenor.com/view/good-evil-star-wars-emporer-palpatine-darkside-gif-4624104")
         }
 
-        
-
         // MARVEL
-        
         if (msg.content.toLowerCase().startsWith("so you got detention")) {
             msg.channel.send("https://tenor.com/view/captain-america-sit-down-patience-gif-14036497")
         }
@@ -148,15 +138,10 @@ client.on('message', msg => {
             msg.channel.send("https://tenor.com/view/captain-america-endgame-thanos-mcu-marvel-gif-14659947")
         }
 
-
-
-
         // DC
         if (msg.content.toLowerCase().startsWith("we live in a society")) {
             msg.channel.send("https://tenor.com/view/joker-zack-snyders-justice-league-zsjl-gif-20378192")
         }
-
-
 
         // MISC
         if (msg.content.toLowerCase().startsWith("dancing kermit")) {
@@ -167,13 +152,7 @@ client.on('message', msg => {
 
 // ----------------------------------------------------------------------------------
 
-
-
-
-
 // ----------------------------------------------------------------------------------
-
-
 
 // Coin Flip
 function GetCoinFlip(max) {
@@ -197,18 +176,6 @@ client.on('message', (message) => {
 });
 
 // ----------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
 
 // ----------------------------------------------------------------------------------
 // Automatically Advertise my Twitch with a single command.
@@ -254,9 +221,7 @@ client.on('message', (message) => {
 
 // ----------------------------------------------------------------------------------
 
-
 // ----------------------------------------------------------------------------------
-
 
 // ----------------------------------------------------------------------------------
 // Open a Moderation Ticket with the Moderators of my Discord Server
@@ -277,7 +242,6 @@ client.on('message', (message) => {
         }
     }
 });
-
 
 // ----------------------------------------------------------------------------------
 // $Roll_StarWars Command
@@ -325,24 +289,8 @@ client.on('message', message => {
             message.channel.send(message.author.toString() +  " ``Using a " + RWep + ", " + RHero + " " + Defeat + " " + RViln + " on " + RPlnt + "``" );
         }
     }
-
-    
-    
 });
 
 // ----------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-client.login(password);
+client.login(password); // login, have a gitignored file with the password
