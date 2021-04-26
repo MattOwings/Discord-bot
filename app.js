@@ -6,7 +6,7 @@ const password = require("./password.js")
 const memberCount = require('./member-count')
 
 const badWords = require('./banned_words')
-const checkMessage = require('./checkMessage')
+const checkMessage = require('./checkMessages')
 
 //console.log("Hello world");
 
