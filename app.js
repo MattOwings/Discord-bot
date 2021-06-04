@@ -6,7 +6,7 @@ const password = require("./password.js")
 const memberCount = require('./member-count')
 
 const badWords = require('./banned_words')
-const checkMessage = require('./checkMessages')
+const checkMessage = require('./checkMessage')
 
 //console.log("Hello world");
 
@@ -22,21 +22,29 @@ client.on('ready', () => {
     client.channels.cache.get("786026453488894004").send("Eyeball Bot has been turned on!");
 });
 
-// Automated Chat Moderation
+client.on('guildMemberAdd', (member) => updateMembers(member.guild))
+client.on('guildMemberRemove', (member) => updateMembers(member.guild))
+// updateMembers function to keep up with people leaving and joining
+
+
+
+
+// Basic Moderation Commands
 
 // Deleting Vulgar Chats
+
 client.on('message', msg => {
-    if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
-        if (msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
-            checkMessage(msg);
+        if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
+            if (msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
+                checkMessage(msg);
+            }
         }
-    }
 });
-// If the bot has the ability to delete messages, it will automatically delete messages that are vulgar or offensive in nature
-// There is a 'list' of words gitignored
+// If the bot has the ability to delete messages, it will automatically moderate the chat
 
 
-// Contact Moderators on my Personal Server
+// Suggestion Command
+
 client.on('message', msg => {
     if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
         if (msg.channel.id === "826966962403147808") {
@@ -49,7 +57,6 @@ client.on('message', msg => {
         }
     }
 })
-// This lets people open a help ticket with the Moderators of my server
 
 // ----------------------------------------------------------------------------------
 
@@ -64,22 +71,18 @@ client.on('message', msg => {
 
 // Command to give other commands
 client.on('message', msg => {
-    if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
-        if (msg.channel.id === '581121014491250700') {
-            if (msg.content.toLowerCase() === '$commands') {
-                msg.channel.send("```Here's all the commands:\nCommand 1\n```")
-                msg.channel.send("`Command 2`")
-                msg.channel.send("`Command 3`")
-                msg.channel.send("`Command 4`")
-                // ... etc for when the give commands function works
+    //if (msg.guild.id === "390984143892119552") {
+            if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
+                if (msg.content.toLowerCase() === "$commands" || msg.content.toLowerCase() === "$cmds") {
+                    msg.channel.send("```'$ticket' --> Open a help ticket with the server Moderators (Only for The Oculi Server)\n\n'$suggest [your custom message]' --> no [], messages are sent to me\n\n'$coinflip' or '$flipcoin' or '$coin' --> Flip a coin\n\n'$roll starwars' or '$roll sw' --> Randomly generate a Star Wars battle\n\n\nFun commands: (caps don't matter)\n\nSTAR WARS: 'Hello there', 'I don't like sand', 'Grogu' or 'Baby Yoda', 'This is the way', 'may the force be with you', 'bonk', 'good'\n\nMARVEL: 'I am Iron Man', 'so you got detention', 'wack'\n\nDC: 'we live in a society'```");
+                }
             }
-        }
-    }
+    //}
 })
-// Not done yet
 
 // ----------------------------------------------------------------------------------
-// Random Fun Commands
+// Various response commands for fun
+
 client.on('message', msg => {
     if (msg.channel.permissionsFor(msg.guild.me).has('SEND_MESSAGES')) {
         if (msg.channel.id === "782410591927140362") {
@@ -125,7 +128,10 @@ client.on('message', msg => {
             msg.channel.send("https://tenor.com/view/good-evil-star-wars-emporer-palpatine-darkside-gif-4624104")
         }
 
+        
+
         // MARVEL
+        
         if (msg.content.toLowerCase().startsWith("so you got detention")) {
             msg.channel.send("https://tenor.com/view/captain-america-sit-down-patience-gif-14036497")
         }
@@ -138,10 +144,15 @@ client.on('message', msg => {
             msg.channel.send("https://tenor.com/view/captain-america-endgame-thanos-mcu-marvel-gif-14659947")
         }
 
+
+
+
         // DC
         if (msg.content.toLowerCase().startsWith("we live in a society")) {
             msg.channel.send("https://tenor.com/view/joker-zack-snyders-justice-league-zsjl-gif-20378192")
         }
+
+
 
         // MISC
         if (msg.content.toLowerCase().startsWith("dancing kermit")) {
@@ -152,7 +163,13 @@ client.on('message', msg => {
 
 // ----------------------------------------------------------------------------------
 
+
+
+
+
 // ----------------------------------------------------------------------------------
+
+
 
 // Coin Flip
 function GetCoinFlip(max) {
@@ -176,6 +193,18 @@ client.on('message', (message) => {
 });
 
 // ----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------------------------------------------------------
 // Automatically Advertise my Twitch with a single command.
@@ -221,7 +250,9 @@ client.on('message', (message) => {
 
 // ----------------------------------------------------------------------------------
 
+
 // ----------------------------------------------------------------------------------
+
 
 // ----------------------------------------------------------------------------------
 // Open a Moderation Ticket with the Moderators of my Discord Server
@@ -242,6 +273,7 @@ client.on('message', (message) => {
         }
     }
 });
+
 
 // ----------------------------------------------------------------------------------
 // $Roll_StarWars Command
@@ -278,7 +310,7 @@ client.on('message', message => {
     }
 
     if (message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) {
-        if(message.content.toLowerCase() === '$roll starwars') {
+        if(message.content.toLowerCase() === '$roll starwars' || message.content.toLowerCase() === '$roll sw') {
 
             var RWep = RandomWeapon();
             var RPlnt = RandomPlanet();
@@ -289,8 +321,24 @@ client.on('message', message => {
             message.channel.send(message.author.toString() +  " ``Using a " + RWep + ", " + RHero + " " + Defeat + " " + RViln + " on " + RPlnt + "``" );
         }
     }
+
+    
+    
 });
 
 // ----------------------------------------------------------------------------------
 
-client.login(password); // login, have a gitignored file with the password
+
+
+
+
+
+
+
+
+
+
+
+
+
+client.login(password);
